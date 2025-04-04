@@ -8,10 +8,11 @@
 
 ## English
 
-A simple, static web-based Markdown editor built with HTML, CSS, and JavaScript, leveraging various libraries loaded via CDN. It aims to replicate some core functionalities and the look-and-feel of sites like `markdown-editor.org`.
+A simple, static web-based Markdown editor built with HTML, CSS, and JavaScript, leveraging various libraries loaded via CDN. It aims to replicate some core functionalities and the look-and-feel of sites like `https://apollo.abcworld.cloudns.org/markdown/`.
 
 **[➡️ Add a Screenshot Here!]**
-(Replace this line with an actual screenshot of your editor, e.g., `![Editor Screenshot](screenshot.png)`)
+(Replace this line with an actual screenshot of your editor, e.g., `![Editor Screenshot](![image](https://github.com/user-attachments/assets/d45c38b1-4282-4960-9d12-351b4088fc7c)
+)`)
 
 ### ✨ Features
 
@@ -81,7 +82,7 @@ This project is licensed under the [MIT License](LICENSE.md).
 一个简单的、基于 HTML、CSS 和 JavaScript 构建的静态网页 Markdown 编辑器，通过 CDN 加载所需库。它旨在复刻类似 `markdown-editor.org` 网站的部分核心功能和外观。
 
 **[➡️ 在此添加截图！]**
-（将此行替换为你的编辑器的实际截图，例如：`![编辑器截图](screenshot.png)`）
+（将此行替换为你的编辑器的实际截图，例如：`![编辑器截图]([screenshot.png](https://github.com/user-attachments/assets/d45c38b1-4282-4960-9d12-351b4088fc7c))`）
 
 ### ✨ 功能特性
 
