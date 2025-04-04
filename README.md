@@ -1,4 +1,7 @@
-# Static Markdown Editor / 静态 Markdown 编辑器
+# Enhance Markdown Editor /  增强Markdown 编辑器 
+
+**Mermaid Support** 
+**KaTeX Support**
 
 [English](#english) | [中文](#中文)
 
