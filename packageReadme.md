@@ -1,6 +1,4 @@
 
-
-```markdown
 # How to Install Nativefier and Package Web Pages into Desktop Applications / 如何安装 Nativefier 并打包网页成桌面应用
 
 [English](#english) | [中文](#中文)
