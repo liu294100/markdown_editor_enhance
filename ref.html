@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Editor Online - markdown在线编辑器 </title>
+
+        <!-- Font Awesome CSS (for icons) -->
+        <link rel="stylesheet" href="lib/css/all.min.css" />
+
+        <!-- CodeMirror CSS -->
+        <link rel="stylesheet" href="lib/css/codemirror.min.css" />
+        <link rel="stylesheet" href="lib/css/material-darker.min.css" />
+
+        <!-- KaTeX CSS -->
+        <link rel="stylesheet" href="lib/css/katex.min.css" >
+
+        <!-- highlight.js CSS (GitHub theme) -->
+        <link rel="stylesheet" href="lib/css/github.min.css" />
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="top-bar">
+            <input type="text" id="doc-title" placeholder="输入文档标题...">
+            <div class="dropdown-container cloud-save">
+                <button id="save-export-button" class="icon-button" title="保存与导出">
+                    <i class="fas fa-cloud-arrow-down"></i>
+                </button>
+                <div class="dropdown-menu export-menu">
+                    <a href="#" id="export-png-menu"><i class="fa-regular fa-image fa-fw"></i> 导出图片</a>
+                    <a href="#" id="export-md-menu"><i class="fa-regular fa-file-code fa-fw"></i> 导出源文件</a>
+                    <a href="#" id="export-pdf-menu"><i class="fa-regular fa-file-pdf fa-fw"></i> 导出PDF文件</a>
+                    <a href="#" id="export-html-menu"><i class="fa-brands fa-html5 fa-fw"></i> 导出HTML文件</a>
+                </div>
+            </div>
+        </div>
+        <div class="main-toolbar">
+            <div class="toolbar-group format-buttons">
+                <button class="icon-button" id="btn-bold" title="加粗 (Ctrl+B)"><i class="fas fa-bold"></i></button>
+                <button class="icon-button" id="btn-italic" title="斜体 (Ctrl+I)"><i class="fas fa-italic"></i></button>
+                <button class="icon-button" id="btn-strikethrough" title="删除线"><i class="fas fa-strikethrough"></i></button>
+                <button class="icon-button" id="btn-link" title="链接 (Ctrl+L)"><i class="fas fa-link"></i></button>
+                <button class="icon-button" id="btn-quote" title="引用"><i class="fas fa-quote-left"></i></button>
+                <button class="icon-button" id="btn-code" title="行内代码"><i class="fas fa-code"></i></button>
+                <button class="icon-button" id="btn-code-block" title="代码块"><i class="fas fa-file-code"></i></button>
+                <button class="icon-button" id="btn-ul" title="无序列表"><i class="fas fa-list-ul"></i></button>
+                <button class="icon-button" id="btn-ol" title="有序列表"><i class="fas fa-list-ol"></i></button>
+                <button class="icon-button" id="btn-table" title="表格"><i class="fas fa-table"></i></button>
+
+                <!-- Formula Dropdown -->
+                <div class="dropdown-container formula-button">
+                    <button class="icon-button" title="插入公式">
+                        <i class="fa fa-calculator"></i>
+                      
+                    </button>
+                    <div class="dropdown-menu formula-menu">
+                        <a href="#" id="insert-inline-formula"><i class="fa-solid fa-calculator fa-fw"></i> 行内公式</a>
+                        <a href="#" id="insert-block-formula"><i class="fa-solid fa-calculator fa-fw"></i> 块级公式</a>
+                    </div>
+                </div>
+
+                <!-- Mermaid Dropdown -->
+                <div class="dropdown-container mermaid-button">
+                    <button class="icon-button" title="插入图表">
+                        <i class="fas fa-project-diagram"></i>
+                    </button>
+                    <div class="dropdown-menu mermaid-menu">
+                        <a href="#" data-mermaid-type="graph">流程图 (graph)</a>
+                        <a href="#" data-mermaid-type="sequenceDiagram">时序图 (sequence)</a>
+                        <a href="#" data-mermaid-type="classDiagram">类图 (class)</a>
+                        <a href="#" data-mermaid-type="stateDiagram">状态图 (state)</a>
+                        <a href="#" data-mermaid-type="erDiagram">关系图 (ER)</a>
+                        <a href="#" data-mermaid-type="journey">旅程图 (journey)</a>
+                        <a href="#" data-mermaid-type="gantt">甘特图 (gantt)</a>
+                        <a href="#" data-mermaid-type="pie">饼状图 (pie)</a>
+                        <a href="#" data-mermaid-type="mindmap">思维导图 (mindmap)</a>
+                        <a href="#" data-mermaid-type="timeline">时间轴 (timeline)</a>
+                    </div>
+                </div>
+            </div>
+            <div class="toolbar-group control-buttons">
+                <button class="icon-button" id="btn-toc" title="目录"><i class="fas fa-list"></i></button>
+                <button class="icon-button" id="btn-help" title="帮助 (未实现)"><i class="fas fa-question-circle"></i></button>
+                <button class="icon-button" id="btn-toggle-layout" title="切换布局"><i class="fas fa-columns"></i></button>
+                <button class="icon-button" id="btn-preview-only" title="仅预览区"><i class="fas fa-desktop"></i></button>
+                <button class="icon-button" id="btn-fullscreen" title="全屏"><i class="fas fa-expand"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <div class="editor-container">
+        <div id="editor-pane" class="editor-pane">
+            <textarea id="editor"></textarea>
+        </div>
+        <div id="preview" class="preview-pane markdown-body">
+            <!-- Preview content will be generated here -->
+        </div>
+    </div>
+
+     <!-- TOC Modal Structure (Initially Hidden) -->
+    <div id="toc-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close-button">×</span>
+            <h2>目录</h2>
+            <div id="toc-list-container">
+                <!-- TOC links will be inserted here -->
+            </div>
+        </div>
+    </div>
+    <!-- End TOC Modal -->
+
+
+    <!-- Library Scripts -->
+    <script src="lib/js/codemirror.min.js"></script>
+    <script src="lib/js/markdown.min.js"></script>
+    <script src="lib/js/markdown-it.min.js"></script>
+    <script defer src="lib/js/katex.min.js"></script> <!-- Note: defer is usually fine here -->
+    <script src="lib/js/mermaid.min.js"></script>
+    <script src="lib/js/highlight.min.js"></script>
+    <script src="lib/js/html2canvas.min.js"></script>
+    <script src="lib/js/jspdf.umd.min.js"></script>
+
+    <!-- Custom Script -->
+    <script src="js/script.js"></script>
+</body>
+</html>

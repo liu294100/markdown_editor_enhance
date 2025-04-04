@@ -1,0 +1,422 @@
+/* Basic Reset & Body */
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f8f9fa;
+}
+
+/* --- Header Area --- */
+.main-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #dee2e6;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Subtle shadow */
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 15px;
+    border-bottom: 1px solid #e9ecef; /* Lighter separator */
+}
+
+#doc-title {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 500;
+    flex-grow: 1;
+    padding: 5px 0;
+    background: transparent;
+    color: #495057;
+}
+#doc-title::placeholder {
+    color: #adb5bd;
+    font-weight: 400;
+}
+
+.cloud-save .icon-button {
+     font-size: 18px;
+     color: #6c757d;
+}
+
+.main-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    background-color: #f8f9fa; /* Slightly off-white toolbar */
+}
+
+.toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 2px; /* Reduced gap between buttons */
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    padding: 6px 8px;
+    font-size: 16px;
+    color: #495057;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    line-height: 1; /* Ensure consistent height */
+    vertical-align: middle;
+}
+
+.icon-button:hover {
+    background-color: #e9ecef;
+    color: #212529;
+}
+
+.icon-button:active {
+     background-color: #dee2e6;
+}
+
+/* --- Dropdown Menus --- */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    z-index: 1000;
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 5px 0;
+    min-width: 160px; /* Minimum width */
+    max-height: 300px; /* Limit height */
+    overflow-y: auto; /* Add scroll if needed */
+}
+
+/* Position specific menus */
+.export-menu {
+    right: 0;
+    top: 100%;
+    margin-top: 5px;
+}
+
+.formula-menu,
+.mermaid-menu {
+    left: 0;
+    top: 100%;
+    margin-top: 5px;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 8px 15px;
+    color: #212529;
+    text-decoration: none;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f3f5;
+}
+
+.dropdown-menu a i.fa-fw { /* Fixed width icons */
+    margin-right: 8px;
+    text-align: center;
+}
+
+/* Class to show the dropdown */
+.dropdown-menu.show {
+    display: block;
+    animation: fadeIn 0.1s ease-out;
+}
+
+
+/* --- Editor/Preview Panes --- */
+.editor-container {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+    /* Calculate height dynamically - adjust if header height changes */
+    height: calc(100vh - 84px); /* Estimate header height (topbar + toolbar + borders) */
+}
+
+.editor-pane,
+.preview-pane {
+    width: 50%;
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    transition: width 0.3s ease, padding 0.3s ease, border 0.3s ease; /* Add transition */
+}
+
+.editor-pane {
+    border-right: 1px solid #dee2e6;
+    position: relative; /* Needed for CM sizing */
+}
+.preview-pane {
+    padding: 25px 35px;
+    background-color: #ffffff;
+}
+
+/* Hide editor pane for preview-only mode */
+.editor-pane.hidden {
+    width: 0;
+    padding: 0;
+    border: none;
+    overflow: hidden;
+    flex-shrink: 0; /* Prevent it from taking up space when width is 0 */
+}
+.preview-pane.full-width {
+    width: 100%;
+}
+
+
+/* CodeMirror Styles */
+.CodeMirror {
+    height: 100% !important; /* Make CodeMirror fill the pane reliably */
+    font-size: 14px;
+    line-height: 1.6;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+
+/* --- Markdown Body Styles (mimicking GitHub) --- */
+.markdown-body {
+    line-height: 1.7;
+    color: #24292e;
+    font-size: 16px; /* Base font size */
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+    scroll-margin-top: 10px; /* Offset for smooth scrolling target */
+}
+
+.markdown-body h1 {
+    font-size: 2em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h2 {
+    font-size: 1.5em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h3 { font-size: 1.25em; }
+.markdown-body h4 { font-size: 1em; }
+.markdown-body h5 { font-size: 0.875em; }
+.markdown-body h6 { font-size: 0.85em; color: #6a737d; }
+
+
+.markdown-body p {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.markdown-body a { color: #0366d6; text-decoration: none; }
+.markdown-body a:hover { text-decoration: underline; }
+
+.markdown-body ul,
+.markdown-body ol { margin-top: 0; margin-bottom: 16px; padding-left: 2em; }
+.markdown-body li { margin-bottom: 0.25em; } /* Slight spacing between list items */
+
+.markdown-body blockquote {
+    margin: 0 0 16px 0;
+    padding: 0 1em;
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+}
+
+.markdown-body code {
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(27,31,35,0.05);
+    border-radius: 3px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f6f8fa;
+    border-radius: 6px; /* Slightly more rounded */
+}
+
+.markdown-body pre code {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+    font-size: 100%;
+}
+
+.markdown-body img { max-width: 100%; box-sizing: content-box; background-color: #fff; }
+
+.markdown-body hr {
+    height: 0.25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #e1e4e8;
+    border: 0;
+}
+
+.markdown-body table {
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    width: auto;
+    border: 1px solid #dfe2e5;
+    display: block; /* Allows overflow scrolling */
+    overflow-x: auto;
+    white-space: nowrap; /* Prevent wrapping within table */
+}
+
+.markdown-body th,
+.markdown-body td { padding: 6px 13px; border: 1px solid #dfe2e5; white-space: normal; /* Allow wrapping inside cell */}
+.markdown-body th { font-weight: 600; background-color: #f6f8fa; }
+
+
+/* KaTeX Styles */
+.katex-display { display: block; margin: 1em 0; text-align: center; }
+.katex-error { color: #f30; border: 1px solid #f30; padding: 5px; margin: 5px 0; display: inline-block;}
+.katex-error[title] { cursor: help; }
+
+
+/* Mermaid Container */
+.mermaid {
+    margin-bottom: 16px;
+    text-align: center;
+    background-color: #fff;
+    padding: 10px 0;
+}
+.mermaid svg { max-width: 100%; height: auto; } /* Ensure responsiveness */
+
+
+/* Highlight.js Styles */
+.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.8em; /* More padding */
+    background: #f6f8fa;
+    color: #24292e;
+    border-radius: 3px; /* Match pre radius */
+}
+
+
+/* --- TOC Modal Styles --- */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 25px 30px;
+    border: 1px solid #bbb;
+    width: 85%;
+    max-width: 550px;
+    border-radius: 5px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    animation: slideIn 0.3s ease-out;
+}
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    color: #333;
+}
+
+.modal-close-button {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-close-button:hover,
+.modal-close-button:focus {
+    color: black;
+    text-decoration: none;
+}
+
+#toc-list-container {
+    max-height: 60vh; /* Limit TOC height */
+    overflow-y: auto;
+}
+
+#toc-list-container ul { list-style: none; padding-left: 0; margin: 0;}
+#toc-list-container li { margin-bottom: 8px; }
+
+#toc-list-container a {
+    text-decoration: none;
+    color: #0366d6;
+    display: block;
+    padding: 4px 8px;
+    border-radius: 3px;
+    transition: background-color 0.15s ease;
+}
+#toc-list-container a:hover { background-color: #f1f3f5; }
+
+/* TOC Indentation */
+#toc-list-container .toc-level-1 { padding-left: 0; font-weight: 500;}
+#toc-list-container .toc-level-2 { padding-left: 20px; }
+#toc-list-container .toc-level-3 { padding-left: 40px; font-size: 0.95em; }
+#toc-list-container .toc-level-4 { padding-left: 60px; font-size: 0.9em; color: #555; }
+#toc-list-container .toc-level-5 { padding-left: 80px; font-size: 0.9em; color: #777; }
+#toc-list-container .toc-level-6 { padding-left: 100px; font-size: 0.9em; color: #999; }
+
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes slideIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
