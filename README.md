@@ -81,7 +81,7 @@ This project is licensed under the [MIT License](LICENSE.md).
 
 ## 中文
 
-一个简单的、基于 HTML、CSS 和 JavaScript 构建的静态网页 Markdown 编辑器，通过 CDN 加载所需库。它旨在复刻类似 `markdown-editor.org` 网站的部分核心功能和外观。
+一个简单的、基于 HTML、CSS 和 JavaScript 构建的静态网页 增强Markdown 编辑器，通过 CDN 加载所需库。它旨在复刻类似 `markdown-editor.org`、`mermaid.live`等 网站的部分核心功能和外观。
 
 **[➡️ 截图！]**
 ![Markdown 编辑器 截图](https://github.com/user-attachments/assets/d45c38b1-4282-4960-9d12-351b4088fc7c)
