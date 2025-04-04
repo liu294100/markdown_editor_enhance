@@ -1,7 +1,7 @@
 # Enhance Markdown Editor /  增强Markdown 编辑器 
 
-**Mermaid Support** 
-**KaTeX Support**
+*  **Mermaid Support** 
+*  **KaTeX Support**
 
 [English](#english) | [中文](#中文)
 
