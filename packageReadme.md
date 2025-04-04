@@ -1,4 +1,4 @@
-Okay, here is the translated content in both English and Chinese, maintaining the original structure and formatting.
+
 
 ```markdown
 # How to Install Nativefier and Package Web Pages into Desktop Applications / 如何安装 Nativefier 并打包网页成桌面应用
