@@ -73,7 +73,7 @@ Contributions are welcome! If you have suggestions or find bugs, please open an 
 ### 📄 License (Optional)
 
 This project is licensed under the [MIT License](LICENSE.md).
-*(Choose a license and add a LICENSE.md file if desired)*
+*(license for LICENSE.md file )*
 
 ---
 
@@ -143,4 +143,4 @@ This project is licensed under the [MIT License](LICENSE.md).
 ### 📄 许可证 (可选)
 
 本项目基于 [MIT 许可证](LICENSE.md) 发布。
-*(建议选择一个许可证，并添加相应的 LICENSE.md 文件)*
+*(许可证，相应的 LICENSE.md 文件)*
