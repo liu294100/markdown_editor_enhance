@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vditor Desktop</title>
+  <link rel="stylesheet" href="../node_modules/vditor/dist/index.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-classic">
+  <div id="app-layout">
+    <!-- ===== Sidebar ===== -->
+    <div id="sidebar" class="sidebar">
+      <div class="sidebar-tabs">
+        <button class="sidebar-tab-btn active" data-tab="outline" title="大纲">📑</button>
+        <button class="sidebar-tab-btn" data-tab="file-tree" title="文件树">📂</button>
+        <button class="sidebar-tab-btn" data-tab="search" title="搜索">🔍</button>
+      </div>
+      <div class="sidebar-content">
+        <!-- Outline Tab -->
+        <div id="tab-outline" class="sidebar-tab-content">
+          <div class="sidebar-panel-header">大纲</div>
+          <div id="outline-content" class="outline-content">
+            <div class="outline-empty">暂无标题</div>
+          </div>
+        </div>
+        <!-- File Tree Tab -->
+        <div id="tab-file-tree" class="sidebar-tab-content hidden">
+          <div class="sidebar-panel-header">
+            <span>文件</span>
+            <button class="sidebar-icon-btn" id="btn-refresh-tree" title="刷新">⟳</button>
+          </div>
+          <div id="file-tree-content" class="file-tree-content">
+            <div class="file-tree-empty">打开文件夹浏览<br><small>文件 → 打开文件夹</small></div>
+          </div>
+        </div>
+        <!-- Search Tab -->
+        <div id="tab-search" class="sidebar-tab-content hidden">
+          <div class="sidebar-panel-header">搜索</div>
+          <div class="sidebar-search-box">
+            <input type="text" id="sidebar-search-input" placeholder="搜索内容..." />
+          </div>
+          <div id="search-results" class="search-results">
+            <div class="search-empty">输入关键词搜索</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Main Area ===== -->
+    <div id="main-area">
+      <!-- Find & Replace Bar -->
+      <div id="find-bar" class="find-bar hidden">
+        <div class="find-row">
+          <input type="text" id="find-input" placeholder="查找..." />
+          <span id="find-count" class="find-count">0/0</span>
+          <button class="find-btn" id="btn-find-prev" title="上一个">▲</button>
+          <button class="find-btn" id="btn-find-next" title="下一个">▼</button>
+          <button class="find-btn" id="btn-find-close" title="关闭">✕</button>
+        </div>
+        <div class="find-row replace-row hidden" id="replace-row">
+          <input type="text" id="replace-input" placeholder="替换..." />
+          <button class="find-btn" id="btn-replace" title="替换">替换</button>
+          <button class="find-btn" id="btn-replace-all" title="全部替换">全部</button>
+        </div>
+      </div>
+
+      <!-- Vditor Editor -->
+      <div id="vditor"></div>
+
+      <!-- Source Mode Editor -->
+      <textarea id="source-editor" class="source-editor hidden" spellcheck="false"></textarea>
+    </div>
+  </div>
+
+  <!-- ===== Status Bar ===== -->
+  <div id="status-bar">
+    <span id="status-mode">所见即所得</span>
+    <span class="status-sep">|</span>
+    <span id="status-chars">0 字符</span>
+    <span id="status-words">0 词</span>
+    <span id="status-lines">0 行</span>
+    <span id="status-paragraphs">0 段</span>
+    <span class="status-sep">|</span>
+    <span id="status-read-time">阅读 ~1 分钟</span>
+    <div class="status-right">
+      <span id="status-encoding">UTF-8</span>
+    </div>
+  </div>
+
+  <!-- ===== Word Count Dialog ===== -->
+  <div id="word-count-overlay" class="dialog-overlay hidden">
+    <div class="dialog-box">
+      <div class="dialog-header">
+        <span>字数统计</span>
+        <button class="dialog-close">✕</button>
+      </div>
+      <div class="dialog-body">
+        <table class="wc-table">
+          <tr><td>字符（含空格）</td><td id="wc-chars">0</td></tr>
+          <tr><td>字符（不含空格）</td><td id="wc-chars-nospace">0</td></tr>
+          <tr><td>英文单词</td><td id="wc-words">0</td></tr>
+          <tr><td>中文字符</td><td id="wc-cjk">0</td></tr>
+          <tr><td>行数</td><td id="wc-lines">0</td></tr>
+          <tr><td>段落</td><td id="wc-paragraphs">0</td></tr>
+          <tr><td>预计阅读时间</td><td id="wc-read-time">1 分钟</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Shortcuts Dialog ===== -->
+  <div id="shortcuts-overlay" class="dialog-overlay hidden">
+    <div class="dialog-box dialog-wide">
+      <div class="dialog-header">
+        <span>快捷键参考</span>
+        <button class="dialog-close">✕</button>
+      </div>
+      <div class="dialog-body">
+        <div class="shortcuts-grid">
+          <div class="shortcut-group">
+            <h4>文件</h4>
+            <div class="shortcut-item"><span>新建</span><kbd>Ctrl+N</kbd></div>
+            <div class="shortcut-item"><span>打开</span><kbd>Ctrl+O</kbd></div>
+            <div class="shortcut-item"><span>保存</span><kbd>Ctrl+S</kbd></div>
+            <div class="shortcut-item"><span>另存为</span><kbd>Ctrl+Shift+S</kbd></div>
+          </div>
+          <div class="shortcut-group">
+            <h4>编辑</h4>
+            <div class="shortcut-item"><span>撤消</span><kbd>Ctrl+Z</kbd></div>
+            <div class="shortcut-item"><span>重做</span><kbd>Ctrl+Y</kbd></div>
+            <div class="shortcut-item"><span>查找</span><kbd>Ctrl+F</kbd></div>
+            <div class="shortcut-item"><span>替换</span><kbd>Ctrl+H</kbd></div>
+          </div>
+          <div class="shortcut-group">
+            <h4>段落</h4>
+            <div class="shortcut-item"><span>标题1-6</span><kbd>Ctrl+1~6</kbd></div>
+            <div class="shortcut-item"><span>段落</span><kbd>Ctrl+0</kbd></div>
+            <div class="shortcut-item"><span>引用</span><kbd>Ctrl+Shift+Q</kbd></div>
+            <div class="shortcut-item"><span>代码块</span><kbd>Ctrl+Shift+K</kbd></div>
+            <div class="shortcut-item"><span>公式块</span><kbd>Ctrl+Shift+M</kbd></div>
+            <div class="shortcut-item"><span>有序列表</span><kbd>Ctrl+Shift+[</kbd></div>
+            <div class="shortcut-item"><span>无序列表</span><kbd>Ctrl+Shift+]</kbd></div>
+            <div class="shortcut-item"><span>任务列表</span><kbd>Ctrl+Shift+X</kbd></div>
+          </div>
+          <div class="shortcut-group">
+            <h4>格式</h4>
+            <div class="shortcut-item"><span>加粗</span><kbd>Ctrl+B</kbd></div>
+            <div class="shortcut-item"><span>斜体</span><kbd>Ctrl+I</kbd></div>
+            <div class="shortcut-item"><span>下划线</span><kbd>Ctrl+U</kbd></div>
+            <div class="shortcut-item"><span>删除线</span><kbd>Alt+Shift+5</kbd></div>
+            <div class="shortcut-item"><span>代码</span><kbd>Ctrl+Shift+`</kbd></div>
+            <div class="shortcut-item"><span>超链接</span><kbd>Ctrl+K</kbd></div>
+            <div class="shortcut-item"><span>清除格式</span><kbd>Ctrl+\</kbd></div>
+          </div>
+          <div class="shortcut-group">
+            <h4>视图</h4>
+            <div class="shortcut-item"><span>侧边栏</span><kbd>Ctrl+Shift+L</kbd></div>
+            <div class="shortcut-item"><span>源码模式</span><kbd>Ctrl+/</kbd></div>
+            <div class="shortcut-item"><span>专注模式</span><kbd>F8</kbd></div>
+            <div class="shortcut-item"><span>打字机</span><kbd>F9</kbd></div>
+            <div class="shortcut-item"><span>全屏</span><kbd>F11</kbd></div>
+            <div class="shortcut-item"><span>放大</span><kbd>Ctrl+Shift+=</kbd></div>
+            <div class="shortcut-item"><span>缩小</span><kbd>Ctrl+Shift+-</kbd></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Settings Dialog ===== -->
+  <div id="settings-overlay" class="dialog-overlay hidden">
+    <div class="dialog-box">
+      <div class="dialog-header">
+        <span>偏好设置</span>
+        <button class="dialog-close" id="btn-settings-close">✕</button>
+      </div>
+      <div class="dialog-body settings-body">
+        <div class="settings-group">
+          <h4>编辑器</h4>
+          <label><span>字体大小</span><input type="number" id="setting-font-size" min="12" max="28" value="16" /> px</label>
+          <label><span>行高</span><input type="number" id="setting-line-height" min="1.2" max="2.5" step="0.1" value="1.6" /></label>
+          <label><span>默认模式</span>
+            <select id="setting-default-mode">
+              <option value="wysiwyg">所见即所得</option>
+              <option value="ir">即时渲染</option>
+              <option value="sv">分屏预览</option>
+            </select>
+          </label>
+          <label><span>编辑区宽度</span>
+            <select id="setting-editor-width">
+              <option value="narrow">窄 (700px)</option>
+              <option value="normal">正常 (860px)</option>
+              <option value="wide">宽 (1100px)</option>
+              <option value="full">全宽</option>
+            </select>
+          </label>
+        </div>
+        <div class="settings-group">
+          <h4>自动保存</h4>
+          <label><span>启用</span><input type="checkbox" id="setting-auto-save" checked /></label>
+          <label><span>间隔</span><input type="number" id="setting-auto-save-interval" min="5" max="300" value="30" /> 秒</label>
+        </div>
+        <div class="settings-group">
+          <h4>图片</h4>
+          <label><span>粘贴图片保存到本地</span><input type="checkbox" id="setting-save-image-local" /></label>
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button id="btn-settings-save" class="btn-primary">保存</button>
+        <button id="btn-settings-cancel">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../node_modules/vditor/dist/index.min.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>

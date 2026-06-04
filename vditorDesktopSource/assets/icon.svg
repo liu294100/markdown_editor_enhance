@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- Background - rounded square like Typora -->
+  <rect width="256" height="256" rx="48" fill="#2b2b2b"/>
+  <!-- Inner glow -->
+  <rect x="8" y="8" width="240" height="240" rx="40" fill="#3d3d3d" opacity="0.5"/>
+  <!-- Markdown symbol # stylized -->
+  <g fill="none" stroke="#e8e8e8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Left vertical line -->
+    <line x1="88" y1="60" x2="72" y2="196"/>
+    <!-- Right vertical line -->
+    <line x1="184" y1="60" x2="168" y2="196"/>
+    <!-- Top horizontal -->
+    <line x1="56" y1="108" x2="200" y2="96"/>
+    <!-- Bottom horizontal -->
+    <line x1="56" y1="160" x2="200" y2="148"/>
+  </g>
+  <!-- Cursor/caret indicator -->
+  <rect x="198" y="80" width="3" height="24" fill="#569cd6" rx="1.5">
+    <animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite"/>
+  </rect>
+</svg>
